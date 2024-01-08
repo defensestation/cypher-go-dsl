@@ -105,6 +105,13 @@ func (node Node) GetRequiredSymbolicName() SymbolicName {
 	return SymbolicNameError(errors.New("node get symbolic name:  no name present"))
 }
 
+func (node Node) AddLabels(labels ...string) Node {
+	for _, label := range labels {
+		addLabels = append(node.labels, NodeLabelCreate(label))
+	}
+	return node
+}
+
 func (node Node) GetSymbolicName() SymbolicName {
 	return node.symbolicName
 }
