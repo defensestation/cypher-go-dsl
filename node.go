@@ -6,10 +6,10 @@ import (
 )
 
 func AccountIdToLabel(accountId string) (string, error) {
-	if ds.AccountId == "" {
+	if accountId == "" {
 		return "", errors.New("account Id can't be nil")
 	}
-	return fmt.Sprintf("%s%s", "dsc_", accountId)
+	return fmt.Sprintf("%s%s", "dsc_", accountId), nil
 }
 
 type Node struct {
@@ -24,7 +24,12 @@ type Node struct {
 
 
 func NodeCreate(accountId string) Node {
-	return NodeCreate2(accountLabel)
+	primaryLabel, err := AccountIdToLabel(accountId)
+	if err != nil {
+		return NodeError(err)
+	}
+	
+	return NodeCreate2(primaryLabel)
 }
 
 func NodeCreate1(accountId string, properties Properties, additionalLabels ...string) Node {
@@ -123,7 +128,7 @@ func (node Node) GetRequiredSymbolicName() SymbolicName {
 
 func (node Node) AddLabels(labels ...string) Node {
 	for _, label := range labels {
-		addLabels = append(node.labels, NodeLabelCreate(label))
+		node.labels = append(node.labels, NodeLabelCreate(label))
 	}
 	return node
 }
