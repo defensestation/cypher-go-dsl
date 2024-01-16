@@ -49,12 +49,12 @@ func ANode(primaryLabel string) Node {
 /**
  * @return A node matching any node.
  */
-func AnyNode() Node {
-	return NodeCreate()
+func AnyNode(primaryLabel string) Node {
+	return NodeCreate(primaryLabel)
 }
 
-func AnyNodeNamed(name string) Node {
-	return NodeCreate().NamedByString(name)
+func AnyNodeNamed(primaryLabel string, name string) Node {
+	return NodeCreate(primaryLabel).NamedByString(name)
 }
 
 /**

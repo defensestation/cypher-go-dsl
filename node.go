@@ -2,9 +2,18 @@ package cypher
 
 import (
 	"errors"
+	"fmt"
 )
 
+func AccountIdToLabel(accountId string) (string, error) {
+	if ds.AccountId == "" {
+		return "", errors.New("account Id can't be nil")
+	}
+	return fmt.Sprintf("%s%s", "dsc_", accountId)
+}
+
 type Node struct {
+	accountId    string
 	symbolicName SymbolicName
 	labels       []NodeLabel
 	properties   Properties
@@ -13,17 +22,18 @@ type Node struct {
 	err          error
 }
 
-func NodeCreate() Node {
-	node := Node{
-		notNil: true,
-	}
-	return node
+
+func NodeCreate(accountId string) Node {
+	return NodeCreate2(accountLabel)
 }
 
-func NodeCreate1(primaryLabel string, properties Properties, additionalLabels ...string) Node {
-	if primaryLabel == "" {
-		return NodeError(errors.New("primary label is required"))
+func NodeCreate1(accountId string, properties Properties, additionalLabels ...string) Node {
+	
+	primaryLabel, err := AccountIdToLabel(accountId)
+	if err != nil {
+		return NodeError(err)
 	}
+
 	for _, label := range additionalLabels {
 		if label == "" {
 			return NodeError(errors.New("empty label is not allowed"))
@@ -35,6 +45,7 @@ func NodeCreate1(primaryLabel string, properties Properties, additionalLabels ..
 		labels = append(labels, NodeLabelCreate(label))
 	}
 	node := Node{
+		accountId: accountId,
 		notNil:     true,
 		properties: properties,
 		labels:     labels,
@@ -43,13 +54,15 @@ func NodeCreate1(primaryLabel string, properties Properties, additionalLabels ..
 	return node
 }
 
-func NodeCreate2(primaryLabel string) Node {
-	if primaryLabel == "" {
-		return NodeError(errors.New("primary label is required"))
+func NodeCreate2(accountId string) Node {
+	primaryLabel, err := AccountIdToLabel(accountId)
+	if err != nil {
+		return NodeError(err)
 	}
 	var labels = make([]NodeLabel, 0)
 	labels = append(labels, NodeLabelCreate(primaryLabel))
 	node := Node{
+		accountId: accountId,
 		labels: labels,
 		notNil: true,
 	}
@@ -57,9 +70,11 @@ func NodeCreate2(primaryLabel string) Node {
 	return node
 }
 
-func NodeCreate3(primaryLabel string, additionalLabel ...string) Node {
-	if primaryLabel == "" {
-		return NodeError(errors.New("primary label is required"))
+
+func NodeCreate3(accountId string, additionalLabel ...string) Node {
+	primaryLabel, err := AccountIdToLabel(accountId)
+	if err != nil {
+		return NodeError(err)
 	}
 	for _, label := range additionalLabel {
 		if label == "" {
@@ -72,6 +87,7 @@ func NodeCreate3(primaryLabel string, additionalLabel ...string) Node {
 		labels = append(labels, NodeLabelCreate(label))
 	}
 	node := Node{
+		accountId: accountId,
 		labels: labels,
 	}
 	node.injectKey()
@@ -114,6 +130,10 @@ func (node Node) AddLabels(labels ...string) Node {
 
 func (node Node) GetSymbolicName() SymbolicName {
 	return node.symbolicName
+}
+
+func (node Node) GetAccountId() string {
+	return node.accountId
 }
 
 func (node Node) isNotNil() bool {
@@ -256,6 +276,10 @@ func NodeLabelError(err error) NodeLabel {
 
 func (n NodeLabel) GetError() error {
 	return n.err
+}
+
+func (n NodeLabel) GetValue() string {
+	return n.value
 }
 
 func (n NodeLabel) isNotNil() bool {
