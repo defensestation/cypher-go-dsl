@@ -70,7 +70,7 @@ func NodeCreate2(accountId string) Node {
 		accountId: accountId,
 		labels: labels,
 		notNil: true,
-		Properties: Properties{},
+		properties: Properties{},
 	}
 	node.injectKey()
 	return node
@@ -95,7 +95,7 @@ func NodeCreate3(accountId string, additionalLabel ...string) Node {
 	node := Node{
 		accountId: accountId,
 		labels: labels,
-		Properties: Properties{},
+		properties: Properties{},
 	}
 	node.injectKey()
 	return node
