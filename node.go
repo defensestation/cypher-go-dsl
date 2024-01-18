@@ -259,8 +259,9 @@ func (node Node) Labels() FunctionInvocation {
 	return Labels(node)
 }
 
-func (node Node) AddProperties(entries []Expression) {
+func (node Node) AddProperties(entries []Expression) Node {
 	node.properties.AddProperties(entries)
+	return node
 }
 
 func (node Node) Project(entries ...interface{}) MapProjection {
