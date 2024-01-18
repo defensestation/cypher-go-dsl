@@ -24,7 +24,7 @@ type Node struct {
 
 
 func EmptyNode() Node {
-	return &Node{
+	return Node{
 		labels: []NodeLabel{},
 	}
 }
