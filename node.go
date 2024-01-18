@@ -260,7 +260,7 @@ func (node Node) Labels() FunctionInvocation {
 }
 
 func (node Node) AddProperties(entries []Expression) {
-	p.properties = p.properties.AddProperties(entries)
+	node.properties = node.properties.AddProperties(entries)
 }
 
 func (node Node) Project(entries ...interface{}) MapProjection {
