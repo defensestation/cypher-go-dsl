@@ -53,6 +53,11 @@ func (s SymbolicName) getKey() string {
 	return s.key
 }
 
+func (s SymbolicName) GetValue() string {
+	return s.value
+}
+
+
 func (s SymbolicName) GetExpressionType() ExpressionType {
 	return EXPRESSION
 }

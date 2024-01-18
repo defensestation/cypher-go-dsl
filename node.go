@@ -137,6 +137,10 @@ func (node Node) GetSymbolicName() SymbolicName {
 	return node.symbolicName
 }
 
+func (node Node) GetSymbolicValue() string {
+	return node.symbolicName.GetValue()
+}
+
 func (node Node) GetAccountId() string {
 	return node.accountId
 }
