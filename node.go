@@ -260,7 +260,7 @@ func (node Node) Labels() FunctionInvocation {
 }
 
 func (node Node) AddProperties(entries []Expression) Node {
-	node.properties.AddProperties(entries)
+	node.properties = node.properties.AddProperties(entries)
 	return node
 }
 
