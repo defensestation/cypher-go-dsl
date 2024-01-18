@@ -40,9 +40,15 @@ func (p Properties) accept(visitor *CypherRenderer) {
 	visitor.leave(p)
 }
 
+func (p Properties) AddProperties(entries []Expression) {
+	p.properties = p.properties.AddEntries(entries)
+}
+
 func (p Properties) enter(renderer *CypherRenderer) {
 	renderer.append(" ")
 }
 
 func (p Properties) leave(renderer *CypherRenderer) {
 }
+
+

@@ -259,6 +259,10 @@ func (node Node) Labels() FunctionInvocation {
 	return Labels(node)
 }
 
+func (node Node) AddProperties(entries []Expression) {
+	p.properties = p.properties.AddProperties(entries)
+}
+
 func (node Node) Project(entries ...interface{}) MapProjection {
 	return MapProjectionCreate(node.GetRequiredSymbolicName(), entries...)
 }
