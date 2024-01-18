@@ -95,7 +95,7 @@ func NodeCreate3(accountId string, additionalLabel ...string) Node {
 	node := Node{
 		accountId: accountId,
 		labels: labels,
-		properties: PropertiesCreate(),,
+		properties: PropertiesCreate(),
 	}
 	node.injectKey()
 	return node
