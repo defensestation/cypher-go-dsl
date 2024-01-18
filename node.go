@@ -23,13 +23,6 @@ type Node struct {
 }
 
 
-func EmptyNode() Node {
-	return Node{
-		labels: []NodeLabel{},
-	}
-}
-
-
 func NodeCreate(accountId string) Node {
 	primaryLabel, err := AccountIdToLabel(accountId)
 	if err != nil {
