@@ -227,10 +227,10 @@ func (d DefaultStatementWithUpdateBuilder) SetWithNamed(variable Named, expressi
 	return d.Set(variable.GetSymbolicName(), expression)
 }
 
-func (d DefaultStatementWithUpdateBuilder) SetMutateWithNamed(variable Named, expression Expression) BuildableStatementAndOngoingMatchAndUpdate {
-	d.defaultBuilder.addUpdatingClause(d.builder.build())
-	return DefaultStatementWithUpdateBuilderCreate2(d.defaultBuilder, UPDATE_TYPE_SET, OperationMutate(variable.GetSymbolicName(), expression))
-}
+// func (d DefaultStatementWithUpdateBuilder) SetMutateWithNamed(variable Named, expression Expression) BuildableStatementAndOngoingMatchAndUpdate {
+// 	d.defaultBuilder.addUpdatingClause(d.builder.build())
+// 	return DefaultStatementWithUpdateBuilderCreate2(d.defaultBuilder, UPDATE_TYPE_SET, OperationMutate(variable.GetSymbolicName(), expression))
+// }
 
 func (d DefaultStatementWithUpdateBuilder) SetByNode(node Node, labels ...string) BuildableStatementAndOngoingMatchAndUpdate {
 	d.defaultBuilder.addUpdatingClause(d.builder.build())

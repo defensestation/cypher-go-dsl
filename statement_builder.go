@@ -150,7 +150,6 @@ type ExposesWith interface {
 type ExposesSet interface {
 	Set(expressions ...Expression) BuildableStatementAndOngoingMatchAndUpdate
 	SetWithNamed(variable Named, expression Expression) BuildableStatementAndOngoingMatchAndUpdate
-	SetMutateWithNamed(variable Named, expression Expression) BuildableStatementAndOngoingMatchAndUpdate
 }
 
 type ExposesSetAndRemove interface {
@@ -187,7 +186,6 @@ type OngoingMergeAction interface {
 	GetErr() error
 	Set(expressions ...Expression) OngoingMatchAndUpdateAndBuildableStatementAndExposesMergeAction
 	SetWithNamed(variable Named, expression Expression) OngoingMatchAndUpdateAndBuildableStatementAndExposesMergeAction
-	// SetMutateWithNamed(variable Named, expression Expression) OngoingMatchAndUpdateAndBuildableStatementAndExposesMergeAction
 }
 
 type OngoingMatchAndReturnWithOrder interface {
