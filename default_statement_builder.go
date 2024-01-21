@@ -284,6 +284,19 @@ func (d DefaultStatementBuilder) SetWithNamed(variable Named, expression Express
 	return d.Set(variable.GetSymbolicName(), expression)
 }
 
+func (d DefaultStatementBuilder) SetMutateWithNamed(variable Named, expression Expression) BuildableStatementAndOngoingMatchAndUpdate {
+	if d.err != nil {
+		return DefaultStatementBuilderError(d.err)
+	}
+	if variable != nil && variable.GetError() != nil {
+		return DefaultStatementBuilderError(variable.GetError())
+	}
+	if expression != nil && expression.GetError() != nil {
+		return DefaultStatementBuilderError(expression.GetError())
+	}
+	return d.Set(OperationMutate(variable.GetSymbolicName(), expression))
+}
+
 func (d DefaultStatementBuilder) SetByNode(node Node, labels ...string) BuildableStatementAndOngoingMatchAndUpdate {
 	if d.err != nil {
 		return DefaultStatementBuilderError(d.err)
