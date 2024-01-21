@@ -187,7 +187,7 @@ type OngoingMergeAction interface {
 	GetErr() error
 	Set(expressions ...Expression) OngoingMatchAndUpdateAndBuildableStatementAndExposesMergeAction
 	SetWithNamed(variable Named, expression Expression) OngoingMatchAndUpdateAndBuildableStatementAndExposesMergeAction
-	SetMutateWithNamed(variable Named, expression Expression) OngoingMatchAndUpdateAndBuildableStatementAndExposesMergeAction
+	// SetMutateWithNamed(variable Named, expression Expression) OngoingMatchAndUpdateAndBuildableStatementAndExposesMergeAction
 }
 
 type OngoingMatchAndReturnWithOrder interface {
