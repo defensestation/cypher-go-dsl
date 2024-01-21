@@ -65,7 +65,11 @@ func PropertyError(err error) Property {
 }
 
 func (p Property) To(expression Expression) Operation {
-	return OperationSet(p, expression)
+	return OperationMutate(p, expression)
+}
+
+func (p Property) Append(expression Expression) Operation {
+	return Operation(p, expression)
 }
 
 func (p Property) GetError() error {

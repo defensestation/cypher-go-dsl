@@ -32,6 +32,10 @@ func OperationSet(target Expression, value Expression) Operation {
 	return OperationCreate(target, SET, value)
 }
 
+func OperationMutate(target Expression, value Expression) Operation {
+	return OperationCreate(target, MUTATE, value)
+}
+
 func OperationSetLabel(target Node, label ...string) Operation {
 	return OperationCreate2(target, SET_LABEL, label...)
 }
@@ -39,3 +43,5 @@ func OperationSetLabel(target Node, label ...string) Operation {
 func OperationRemove(target Node, label ...string) Operation {
 	return OperationCreate2(target, REMOVE_LABEL, label...)
 }
+
+
