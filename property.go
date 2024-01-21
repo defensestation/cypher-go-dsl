@@ -68,10 +68,6 @@ func (p Property) To(expression Expression) Operation {
 	return OperationSet(p, expression)
 }
 
-func (p Property) Append(expression Expression) Operation {
-	return OperationMutate(p, expression)
-}
-
 func (p Property) GetError() error {
 	return p.err
 }
