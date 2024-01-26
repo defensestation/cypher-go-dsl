@@ -73,6 +73,10 @@ func (r Relationship) GetSymbolicName() SymbolicName {
 	return r.details.symbolicName
 }
 
+func (r Relationship) GetSymbolicValue() string {
+	return r.details.symbolicName.GetValue()
+}
+
 func (r Relationship) getKey() string {
 	return r.key
 }
