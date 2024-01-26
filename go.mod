@@ -1,6 +1,6 @@
 module github.com/defensestation/cypher-go-dsl
 
-go 1.21.6
+go 1.21.5
 
 require (
 	github.com/manhcuongbk56/cypher-go-dsl v0.0.0-20210204162818-cbcd44c456be
