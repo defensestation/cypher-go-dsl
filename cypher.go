@@ -13,13 +13,18 @@ import (
  * @param additionalLabels Additional labels
  * @return A new node representation
  */
-func NewNodeWithLabels(primaryLabel string, additionalLabel ...string) Node {
+func NewNodeWithLabels(accountId string, additionalLabel ...string) Node {
+	primaryLabel, err := AccountIdToLabel(accountId)
+	if err != nil {
+		return NodeError(err)
+	}
 	var labels = make([]NodeLabel, 0)
 	labels = append(labels, NodeLabel{value: primaryLabel})
 	for _, label := range additionalLabel {
 		labels = append(labels, NodeLabel{value: label})
 	}
 	return Node{
+		accountId: accountId,
 		labels: labels,
 	}
 }
