@@ -26,6 +26,8 @@ func NewNodeWithLabels(accountId string, additionalLabel ...string) Node {
 	return Node{
 		accountId: accountId,
 		labels: labels,
+		notNil: true,
+		properties: PropertiesCreate(NewMapExpression()),
 	}
 }
 
