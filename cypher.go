@@ -23,12 +23,15 @@ func NewNodeWithLabels(accountId string, additionalLabel ...string) Node {
 	for _, label := range additionalLabel {
 		labels = append(labels, NodeLabel{value: label})
 	}
-	return Node{
+	node := Node{
 		accountId: accountId,
 		labels: labels,
 		notNil: true,
 		properties: PropertiesCreate(NewMapExpression()),
 	}
+	node.injectKey()
+
+	return node
 }
 
 /**
