@@ -553,6 +553,15 @@ func LiteralOf(object interface{}) Literal {
 	if intValue, isInt := object.(int); isInt {
 		return NumberLiteralCreate1(intValue)
 	}
+
+	if intValue, isInt := object.(int32); isInt {
+		return NumberLiteralCreate3(intValue)
+	}
+
+	if intValue, isInt := object.(int64); isInt {
+		return NumberLiteralCreate(intValue)
+	}
+
 	if floatValue, isFloat := object.(float64); isFloat {
 		return NumberLiteralCreate2(floatValue)
 	}

@@ -42,6 +42,17 @@ func NumberLiteralCreate1(content int) NumberLiteral {
 	return n
 }
 
+func NumberLiteralCreate3(content int32) NumberLiteral {
+	n := NumberLiteral{
+		content: new(big.Float).SetInt(new(big.Int).SetInt64(int64(content))),
+		notNil:  true,
+	}
+	n.key = getAddress(&n)
+	n.ExpressionContainer = ExpressionWrap(n)
+	return n
+}
+
+
 func (n NumberLiteral) GetError() error {
 	return n.err
 }
