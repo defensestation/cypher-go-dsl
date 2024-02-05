@@ -19,7 +19,7 @@ func RawStringLiteralCreate(content string) RawStringLiteral {
 }
 
 func RawStringLiteralError(err error) RawStringLiteral {
-	return RawStringLiteralError(err)
+	return RawStringLiteral{err: err}
 }
 
 func (s RawStringLiteral) GetError() error {

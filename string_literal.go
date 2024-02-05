@@ -32,7 +32,7 @@ func StringLiteralCreate(content string) StringLiteral {
 }
 
 func StringLiteralError(err error) StringLiteral {
-	return StringLiteralError(err)
+	return StringLiteral{err: err}
 }
 
 func (s StringLiteral) GetError() error {
