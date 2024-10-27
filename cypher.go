@@ -56,6 +56,24 @@ func ANode(primaryLabel string) Node {
 	return NodeCreate2(primaryLabel)
 }
 
+func ANodeWithLabelWithoutAccountId(additionalLabel ...string) Node {
+	for _, label := range additionalLabel {
+		if label == "" {
+			return NodeError(errors.New("empty label is not allowed"))
+		}
+	}
+	var labels = make([]NodeLabel, 0)
+	for _, label := range additionalLabel {
+		labels = append(labels, NodeLabelCreate(label))
+	}
+	node := Node{
+		labels: labels,
+		properties: PropertiesCreate(NewMapExpression()),
+	}
+	node.injectKey()
+	return node
+}
+
 /**
  * @return A node matching any node.
  */

@@ -24,11 +24,6 @@ type Node struct {
 
 
 func NodeCreate(accountId string) Node {
-	primaryLabel, err := AccountIdToLabel(accountId)
-	if err != nil {
-		return NodeError(err)
-	}
-
 	return NodeCreate2(primaryLabel)
 }
 
@@ -58,6 +53,8 @@ func NodeCreate1(accountId string, properties Properties, additionalLabels ...st
 	node.injectKey()
 	return node
 }
+
+
 
 func NodeCreate2(accountId string) Node {
 	primaryLabel, err := AccountIdToLabel(accountId)
