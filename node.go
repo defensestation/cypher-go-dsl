@@ -24,7 +24,7 @@ type Node struct {
 
 
 func NodeCreate(accountId string) Node {
-	return NodeCreate2(primaryLabel)
+	return NodeCreate2(accountId)
 }
 
 func NodeCreate1(accountId string, properties Properties, additionalLabels ...string) Node {
