@@ -45,6 +45,10 @@ func (m MapExpression) isNotNil() bool {
 	return m.notNil
 }
 
+func (m MapExpression) IsNotNil() bool {
+	return m.notNil
+}
+
 func (m MapExpression) getKey() string {
 	return m.key
 }

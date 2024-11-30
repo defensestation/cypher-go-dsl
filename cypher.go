@@ -56,7 +56,7 @@ func ANode(primaryLabel string) Node {
 	return NodeCreate2(primaryLabel)
 }
 
-func ANodeWithLabelWithoutAccountId(additionalLabel ...string) Node {
+func ANodeWithLabelWithoutDSPrefix(additionalLabel ...string) Node {
 	for _, label := range additionalLabel {
 		if label == "" {
 			return NodeError(errors.New("empty label is not allowed"))
