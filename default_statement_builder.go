@@ -1,6 +1,7 @@
 package cypher
 
 import (
+	"fmt"
 	"errors"
 	"golang.org/x/xerrors"
 )
@@ -656,6 +657,8 @@ func getUpdatingClauseBuilder(updateType UpdateType, patternOrExpression ...Visi
 func prepareSetExpression(possibleSetOperations []Expression) ([]Expression, error) {
 	propertyOperations := make([]Expression, 0)
 	listOfExpressions := make([]Expression, 0)
+
+	fmt.Printf("------------------++++>>>> %+v %v\n", possibleSetOperations, len(possibleSetOperations))
 	for _, possibleSetOperation := range possibleSetOperations {
 		if operation, isOperation := possibleSetOperation.(Operation); isOperation {
 			propertyOperations = append(propertyOperations, operation)
@@ -663,7 +666,12 @@ func prepareSetExpression(possibleSetOperations []Expression) ([]Expression, err
 			listOfExpressions = append(listOfExpressions, possibleSetOperation)
 		}
 	}
+	fmt.Printf("------------------++++ %+v --- %+v %v\n", len(propertyOperations), listOfExpressions, len(listOfExpressions))
 	if len(listOfExpressions)%2 != 0 {
+		fmt.Printf("-------------1111-----++++ %+v\n", len(listOfExpressions))
+		fmt.Println(possibleSetOperations)
+		fmt.Println("))))))))))$$$$$$$$$$$")
+		fmt.Println(listOfExpressions)
 		return nil, xerrors.New("the list of expression to OperationSet must be even")
 	}
 	for i := 0; i < len(listOfExpressions); i += 2 {

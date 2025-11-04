@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -29,7 +29,7 @@ func TestGh167(t *testing.T) {
 		Match(aFl, lFr).
 		WithDistinctByNamed(resume, locStart, app).
 		Match(resume.RelationshipTo(offer.WithRawProperties("is_valid", cypher.LiteralTrue()), "IN_COHORT_OF").
-			RelationshipTo(cypher.AnyNodeNamed("app"), "IN")).
+			RelationshipTo(cypher.AnyNodeNamed("123456789","app"), "IN")).
 		WithDistinctByNamed(resume, locStart, app, offer).
 		Match(offer.RelationshipTo(startN, "FOR")).
 		Where(cypher.IdByNode(startN).In(cypher.AParam("start_ids")).Get()).
@@ -67,10 +67,10 @@ func TestGh184(t *testing.T) {
 			And(r.HasLabels("InvalidStatus").Not().Get()).
 			Or(o.Property("valid_only").IsTrue().And(r.HasLabels("ValidStatus")).Get()).Get()).
 		And(r.Property("is_internship").IsTrue().
-			And(cypher.SizeByPattern(r.RelationshipTo(cypher.AnyNode(), "PART_OF")).IsEmpty().Get()).
+			And(cypher.SizeByPattern(r.RelationshipTo(cypher.AnyNode("123456789"), "PART_OF")).IsEmpty().Get()).
 			Not().Get()).
 		And(r.Property("is_sandwich_training").IsTrue().
-			And(cypher.SizeByPattern(r.RelationshipTo(cypher.AnyNode(), "PART_OF")).IsEmpty().Get()).
+			And(cypher.SizeByPattern(r.RelationshipTo(cypher.AnyNode("123456789"), "PART_OF")).IsEmpty().Get()).
 			Not().Get()).
 		ReturningDistinctByNamed(r, o)
 	Assert(t, builder, "MATCH (r:`Resume`)<-[:`HAS`]-(u:`UserSearchable`) "+
@@ -213,7 +213,7 @@ func TestGh245(t *testing.T) {
 
 func TestGh44(t *testing.T) {
 	var builder cypher.BuildableStatement
-	n := cypher.AnyNodeNamed("n")
+	n := cypher.AnyNodeNamed("123456789","n")
 	//
 	builder = cypher.
 		Match(n).
@@ -238,7 +238,7 @@ func TestAliasesShouldBeEscapedIfNecessary(t *testing.T) {
 	alias := cypher.ASymbolic("n").As("das ist ein Alias").Get()
 	//
 	builder = cypher.
-		Match(cypher.AnyNode().NamedByString("n")).
+		Match(cypher.AnyNode("123456789").NamedByString("n")).
 		With(alias).
 		Returning(alias)
 	Assert(t, builder, "MATCH (n) WITH n AS `das ist ein Alias` RETURN `das ist ein Alias`")
@@ -246,7 +246,7 @@ func TestAliasesShouldBeEscapedIfNecessary(t *testing.T) {
 
 func TestProjectedPropertiesShouldBeEscapedIfNecessary(t *testing.T) {
 	var builder cypher.BuildableStatement
-	node := cypher.AnyNode().NamedByString("n")
+	node := cypher.AnyNode("123456789").NamedByString("n")
 	//
 	builder = cypher.
 		Match(node).

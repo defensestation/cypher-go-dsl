@@ -1,14 +1,14 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
 func TestUnwindWithoutWith(t *testing.T) {
 	var builder cypher.BuildableStatement
 	//
-	rootNode := cypher.AnyNodeNamed("n")
+	rootNode := cypher.AnyNodeNamed("123456789","n")
 	label := cypher.ASymbolic("label")
 	builder = cypher.Match(rootNode).
 		WhereConditionContainer(rootNode.InternalId().IsEqualTo(cypher.LiteralOf(1))).
@@ -36,7 +36,7 @@ func TestShouldRenderLeadingUnwindWithUpdate(t *testing.T) {
 		As("n").
 		Merge(bikeNode.WithRawProperties("b", cypher.ASymbolic("n"))).
 		ReturningByNamed(bikeNode)
-	Assert(t, builder, "UNWIND [1, true, false] AS n MERGE (b:`Bike` {b: n}) RETURN b")
+	Assert(t, builder, "UNWIND [1, true, false] AS n MERGE (b:`dsc_Bike` {} {b: n}) RETURN b")
 }
 
 func TestShouldRenderLeadingUnwindWithCreate(t *testing.T) {
@@ -46,7 +46,7 @@ func TestShouldRenderLeadingUnwindWithCreate(t *testing.T) {
 		As("n").
 		Create(bikeNode.WithRawProperties("b", cypher.ASymbolic("n"))).
 		ReturningByNamed(bikeNode)
-	Assert(t, builder, "UNWIND [1, true, false] AS n CREATE (b:`Bike` {b: n}) RETURN b")
+	Assert(t, builder, "UNWIND [1, true, false] AS n CREATE (b:`dsc_Bike` {} {b: n}) RETURN b")
 }
 
 func TestShouldRenderUnwind(t *testing.T) {
@@ -59,6 +59,6 @@ func TestShouldRenderUnwind(t *testing.T) {
 		WithByString("x").
 		Delete(cypher.ASymbolic("x")).
 		ReturningByString("x")
-	Assert(t, builder, "MATCH (b:`Bike`) WITH collect(b) AS collected UNWIND collected AS x WITH x DELETE x "+
+	Assert(t, builder, "MATCH (b:`dsc_Bike` {}) WITH collect(b) AS collected UNWIND collected AS x WITH x DELETE x "+
 		"RETURN x")
 }

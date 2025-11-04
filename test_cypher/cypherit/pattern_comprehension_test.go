@@ -1,14 +1,14 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
 func TestPatternComprehensionsSimple(t *testing.T) {
 	var builder cypher.BuildableStatement
 	a := cypher.ANode("Person").WithRawProperties("name", cypher.LiteralOf("Keanu Reeves")).NamedByString("a")
-	b := cypher.AnyNodeNamed("b")
+	b := cypher.AnyNodeNamed("123456789","b")
 	//
 	builder = cypher.
 		Match(a).
@@ -19,7 +19,7 @@ func TestPatternComprehensionsSimple(t *testing.T) {
 func TestPatternComprehensionsSimpleWithWhere(t *testing.T) {
 	var builder cypher.BuildableStatement
 	a := cypher.ANode("Person").WithRawProperties("name", cypher.LiteralOf("Keanu Reeves")).NamedByString("a")
-	b := cypher.AnyNodeNamed("b")
+	b := cypher.AnyNodeNamed("123456789","b")
 	//
 	builder = cypher.
 		Match(a).

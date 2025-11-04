@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -116,7 +116,7 @@ func TestDoc3652(t *testing.T) {
 func TestDoc3653(t *testing.T) {
 	person := cypher.ANode("Person").NamedByString("n")
 	statement, err := cypher.Match(person).
-		WherePattern(person.RelationshipBetween(cypher.AnyNode().WithRawProperties("name", cypher.LiteralOf("Timothy")), "KNOWS")).
+		WherePattern(person.RelationshipBetween(cypher.AnyNode("123456789").WithRawProperties("name", cypher.LiteralOf("Timothy")), "KNOWS")).
 		Returning(person.Property("name"), person.Property("age")).
 		Build()
 	if err != nil {
@@ -154,7 +154,7 @@ func TestGh113(t *testing.T) {
 
 func TestDoc3654(t *testing.T) {
 	person := cypher.ANode("Person").NamedByString("n")
-	pathPattern := person.RelationshipTo(cypher.AnyNode()).NamedByString("r")
+	pathPattern := person.RelationshipTo(cypher.AnyNode("123456789")).NamedByString("r")
 	statement, err := cypher.Match(pathPattern).
 		WhereConditionContainer(person.Property("name").IsEqualTo(cypher.LiteralOf("Andy"))).
 		And(cypher.FunctionType(pathPattern).MatchesPattern("K.*").Get()).
@@ -209,7 +209,7 @@ func TestAfterWith(t *testing.T) {
 
 func TestInPatternComprehensions(t *testing.T) {
 	a := cypher.ANode("Person").WithRawProperties("name", cypher.LiteralOf("Keanu Reeves")).NamedByString("a")
-	b := cypher.AnyNodeNamed("b")
+	b := cypher.AnyNodeNamed("123456789","b")
 	statement, err := cypher.Match(a).
 		Returning(
 			cypher.ListBasedOn(a.RelationshipBetween(b)).

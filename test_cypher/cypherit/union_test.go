@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -31,7 +31,7 @@ func TestShouldRenderUnions(t *testing.T) {
 		return
 	}
 	statement4 := cypher.Union(statement1, statement2, statement3)
-	AssertStatement(t, statement4, "MATCH (b:`Bike`) WHERE b.a = 'A' RETURN b UNION MATCH (b) WHERE b.b = 'B' RETURN b UNION"+
+	AssertStatement(t, statement4, "MATCH (b:`dsc_Bike` {}) WHERE b.a = 'A' RETURN b UNION MATCH (b) WHERE b.b = 'B' RETURN b UNION"+
 		" MATCH (b) WHERE b.c = 'C' RETURN b")
 }
 
@@ -53,7 +53,7 @@ func TestShouldRenderAllUnions(t *testing.T) {
 		return
 	}
 	statement3 := cypher.UnionAll(statement1, statement2)
-	AssertStatement(t, statement3, "MATCH (b:`Bike`) WHERE b.a = 'A' RETURN b UNION ALL MATCH (b) WHERE b.b = 'B' RETURN b")
+	AssertStatement(t, statement3, "MATCH (b:`dsc_Bike` {}) WHERE b.a = 'A' RETURN b UNION ALL MATCH (b) WHERE b.b = 'B' RETURN b")
 }
 
 func TestShouldAppendToExistingUnions(t *testing.T) {
@@ -91,7 +91,7 @@ func TestShouldAppendToExistingUnions(t *testing.T) {
 		return
 	}
 	statement = cypher.UnionAll(statement, statement3, statement4)
-	AssertStatement(t, statement, "MATCH (b:`Bike`) WHERE b.a = 'A' RETURN b UNION ALL MATCH (b) WHERE b.b = 'B' RETURN b "+
+	AssertStatement(t, statement, "MATCH (b:`dsc_Bike` {}) WHERE b.a = 'A' RETURN b UNION ALL MATCH (b) WHERE b.b = 'B' RETURN b "+
 		"UNION ALL MATCH (b) WHERE b.c = 'C' RETURN b UNION ALL MATCH (b) WHERE b.d = 'D' RETURN"+
 		" b")
 }

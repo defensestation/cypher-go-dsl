@@ -1,14 +1,14 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
 func TestProjectionSimple(t *testing.T) {
 	var builder cypher.BuildableStatement
 	//
-	n := cypher.AnyNodeNamed("n")
+	n := cypher.AnyNodeNamed("123456789","n")
 	builder = cypher.
 		Match(n).
 		Returning(n.Project("__internalNeo4jId__", cypher.IdByNode(n), "name"))

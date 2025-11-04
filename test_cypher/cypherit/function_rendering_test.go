@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -16,7 +16,7 @@ func TestInWhereClause(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`) WHERE id(u) = 1 RETURN u"
+	expect := "MATCH (u:`dsc_User` {}) WHERE id(u) = 1 RETURN u"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -32,7 +32,7 @@ func TestInReturnClause(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`) RETURN count(u)"
+	expect := "MATCH (u:`dsc_User` {}) RETURN count(u)"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -48,7 +48,7 @@ func TestInReturnClauseWithDistinct(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`) RETURN count(DISTINCT u)"
+	expect := "MATCH (u:`dsc_User` {}) RETURN count(DISTINCT u)"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -64,7 +64,7 @@ func TestAliasedInReturnClause(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`) RETURN count(u) AS cnt"
+	expect := "MATCH (u:`dsc_User` {}) RETURN count(u) AS cnt"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -80,7 +80,7 @@ func TestShouldSupportMoreThanOneArgument(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`) RETURN coalesce(u.a, u.b, '¯\\\\_(ツ)_/¯')"
+	expect := "MATCH (u:`dsc_User` {}) RETURN coalesce(u.a, u.b, '¯\\\\_(ツ)_/¯')"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -96,7 +96,7 @@ func TestLiteralShouldDealWithNil(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`) RETURN coalesce(NULL, u.field) AS p"
+	expect := "MATCH (u:`dsc_User` {}) RETURN coalesce(NULL, u.field) AS p"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}

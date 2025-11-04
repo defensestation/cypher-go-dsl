@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -10,8 +10,8 @@ func TestAllShouldWork(t *testing.T) {
 	//
 	p := cypher.
 		APath("p").
-		DefinedBy(cypher.AnyNodeNamed("a").
-			RelationshipTo(cypher.AnyNodeNamed("b")).Min(1).Max(3))
+		DefinedBy(cypher.AnyNodeNamed("123456789","a").
+			RelationshipTo(cypher.AnyNodeNamed("123456789","b")).Min(1).Max(3))
 	builder = cypher.Match(p).
 		Where(cypher.AProperty("a", "name").IsEqualTo(cypher.LiteralOf("Alice")).Get()).
 		And(cypher.AProperty("b", "name").IsEqualTo(cypher.LiteralOf("Daniel")).Get()).
@@ -25,19 +25,19 @@ func TestAllShouldWork(t *testing.T) {
 func TestAnyShouldWork1WithNilCondition(t *testing.T) {
 	var builder cypher.BuildableStatement
 	//
-	a := cypher.AnyNodeNamed("a")
+	a := cypher.AnyNodeNamed("123456789","a")
 	builder = cypher.
 		Match(a).
 		Where(nil).
 		Returning(a.Property("name"), a.Property("array"))
 
-	Assert(t, builder, "MATCH (a) RETURN a.name, a.array")
+	Assert(t, builder, "MATCH (a:`dsc_123456789` {}) RETURN a.name, a.array")
 }
 
 func TestAnyShouldWork(t *testing.T) {
 	var builder cypher.BuildableStatement
 	//
-	a := cypher.AnyNodeNamed("a")
+	a := cypher.AnyNodeNamed("123456789","a")
 	builder = cypher.
 		Match(a).
 		Where(cypher.AProperty("a", "name").IsEqualTo(cypher.LiteralOf("Eskil")).Get()).
@@ -45,7 +45,7 @@ func TestAnyShouldWork(t *testing.T) {
 			Where(cypher.ASymbolic("x").IsEqualTo(cypher.LiteralOf("one")).Get())).
 		Returning(a.Property("name"), a.Property("array"))
 
-	Assert(t, builder, "MATCH (a) WHERE (a.name = 'Eskil' AND any(x IN a.array WHERE x = 'one')) RETURN a.name, a.array")
+	Assert(t, builder, "MATCH (a:`dsc_123456789` {}) WHERE (a.name = 'Eskil' AND any(x IN a.array WHERE x = 'one')) RETURN a.name, a.array")
 }
 
 func TestNoneShouldWork(t *testing.T) {
@@ -53,8 +53,8 @@ func TestNoneShouldWork(t *testing.T) {
 	//
 	p := cypher.
 		APath("p").
-		DefinedBy(cypher.AnyNodeNamed("a").
-			RelationshipTo(cypher.AnyNodeNamed("b")).Min(1).Max(3))
+		DefinedBy(cypher.AnyNodeNamed("123456789","a").
+			RelationshipTo(cypher.AnyNodeNamed("123456789","b")).Min(1).Max(3))
 	builder = cypher.Match(p).
 		Where(cypher.AProperty("a", "name").IsEqualTo(cypher.LiteralOf("Alice")).Get()).
 		And(cypher.
@@ -71,8 +71,8 @@ func TestSingleShouldWork(t *testing.T) {
 	//
 	p := cypher.
 		APath("p").
-		DefinedBy(cypher.AnyNodeNamed("n").
-			RelationshipTo(cypher.AnyNodeNamed("b")))
+		DefinedBy(cypher.AnyNodeNamed("123456789","n").
+			RelationshipTo(cypher.AnyNodeNamed("123456789","b")))
 	builder = cypher.Match(p).
 		Where(cypher.AProperty("n", "name").IsEqualTo(cypher.LiteralOf("Alice")).Get()).
 		And(cypher.

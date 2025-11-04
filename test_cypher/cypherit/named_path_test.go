@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -10,9 +10,9 @@ func TestDoc3148(t *testing.T) {
 	//
 	namePath := cypher.
 		APath("p").
-		DefinedBy(cypher.AnyNodeNamed("michael").
+		DefinedBy(cypher.AnyNodeNamed("123456789","michael").
 			WithRawProperties("name", cypher.LiteralOf("Michael Douglas")).
-			RelationshipTo(cypher.AnyNode()))
+			RelationshipTo(cypher.AnyNode("123456789")))
 	builder = cypher.Match(namePath).
 		ReturningByNamed(namePath)
 
@@ -24,8 +24,8 @@ func TestShouldWorkInListComprehensions(t *testing.T) {
 	//
 	namePath := cypher.
 		APath("p").
-		DefinedBy(cypher.AnyNodeNamed("n").
-			RelationshipTo(cypher.AnyNode(), "LIKES", "OWNS").
+		DefinedBy(cypher.AnyNodeNamed("123456789","n").
+			RelationshipTo(cypher.AnyNode("123456789"), "LIKES", "OWNS").
 			Unbounded())
 	builder = cypher.CypherReturning(cypher.ListBasedOnNamed(namePath).ReturningByNamed(namePath))
 

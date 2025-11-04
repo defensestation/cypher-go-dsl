@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -16,7 +16,7 @@ func TestSimple(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (b:`Bike`) MATCH (u:`User`), (o:`U`) RETURN b"
+	expect := "MATCH (b:`dsc_Bike` {}) MATCH (u:`dsc_User` {}), (o:`U`) RETURN b"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -34,7 +34,7 @@ func TestSimpleWhere(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (b:`Bike`) MATCH (u:`User`), (o:`U`) WHERE u.a IS NULL RETURN b"
+	expect := "MATCH (b:`dsc_Bike` {}) MATCH (u:`dsc_User` {}), (o:`U`) WHERE u.a IS NULL RETURN b"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -53,7 +53,7 @@ func TestMultiWhere(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (b:`Bike`) WHERE b.a IS NOT NULL MATCH (u:`User`), (o:`U`) WHERE u.a IS NULL RETURN b"
+	expect := "MATCH (b:`dsc_Bike` {}) WHERE b.a IS NOT NULL MATCH (u:`dsc_User` {}), (o:`U`) WHERE u.a IS NULL RETURN b"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -73,7 +73,7 @@ func TestMultiWhereMultiConditions(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (b:`Bike`) WHERE (b.a IS NOT NULL AND b.b IS NULL) MATCH (u:`User`), (o:`U`) WHERE (u.a IS NULL OR id(u) = 4711) RETURN b"
+	expect := "MATCH (b:`dsc_Bike` {}) WHERE (b.a IS NOT NULL AND b.b IS NULL) MATCH (u:`dsc_User` {}), (o:`U`) WHERE (u.a IS NULL OR id(u) = 4711) RETURN b"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -91,7 +91,7 @@ func TestOptionalMatch(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "OPTIONAL MATCH (b:`Bike`) MATCH (u:`User`), (o:`U`) WHERE u.a IS NULL RETURN b"
+	expect := "OPTIONAL MATCH (b:`dsc_Bike` {}) MATCH (u:`dsc_User` {}), (o:`U`) WHERE u.a IS NULL RETURN b"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -110,7 +110,7 @@ func TestUsingSameWithStepWithoutReassign(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (b:`Bike`) WITH b OPTIONAL MATCH (u:`User`) OPTIONAL MATCH (trip:`Trip`) RETURN *"
+	expect := "MATCH (b:`dsc_Bike` {}) WITH b OPTIONAL MATCH (u:`dsc_User` {}) OPTIONAL MATCH (trip:`Trip`) RETURN *"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -130,7 +130,7 @@ func TestUsingSameWithStepWithoutReassignThenUpdate(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (b:`Bike`) WITH b OPTIONAL MATCH (u:`User`) OPTIONAL MATCH (trip:`Trip`) DELETE u RETURN *"
+	expect := "MATCH (b:`dsc_Bike` {}) WITH b OPTIONAL MATCH (u:`dsc_User` {}) OPTIONAL MATCH (trip:`Trip`) DELETE u RETURN *"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -141,7 +141,7 @@ func TestQueryPartsShouldBeExtractableInQueries(t *testing.T) {
 		Match(cypher.ANode("S1").NamedByString("n")).
 		Where(cypher.AProperty("n", "a").IsEqualTo(cypher.LiteralOf("A")).Get()).
 		WithByString("n").
-		Match(cypher.AnyNodeNamed("n").RelationshipTo(cypher.ANode("S2").NamedByString("m"), "SOMEHOW_RELATED")).
+		Match(cypher.AnyNodeNamed("123456789","n").RelationshipTo(cypher.ANode("S2").NamedByString("m"), "SOMEHOW_RELATED")).
 		WithByString("n", "m").
 		ReturningByString("n", "m").
 		Build()
@@ -168,7 +168,7 @@ func TestOptionalNext(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (b:`Bike`) OPTIONAL MATCH (u:`User`), (o:`U`) WHERE u.a IS NULL RETURN b"
+	expect := "MATCH (b:`dsc_Bike` {}) OPTIONAL MATCH (u:`dsc_User` {}), (o:`U`) WHERE u.a IS NULL RETURN b"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -179,5 +179,5 @@ func TestOptionalMatchThenDelete(t *testing.T) {
 		Match(bikeNode).
 		OptionalMatch(userNode, cypher.ANode("U").NamedByString("o")).
 		DeleteByNamed(userNode, bikeNode)
-	Assert(t, buildableStatement, "MATCH (b:`Bike`) OPTIONAL MATCH (u:`User`), (o:`U`) DELETE u, b")
+	Assert(t, buildableStatement, "MATCH (b:`dsc_Bike` {}) OPTIONAL MATCH (u:`dsc_User` {}), (o:`U`) DELETE u, b")
 }

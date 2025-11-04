@@ -2,7 +2,7 @@ package cypherit
 
 import (
 	"fmt"
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -32,7 +32,7 @@ func TestNestedOnRelationship(t *testing.T) {
 
 func TestAsterisk(t *testing.T) {
 	var builder cypher.BuildableStatement
-	n := cypher.AnyNodeNamed("n")
+	n := cypher.AnyNodeNamed("123456789","n")
 	//
 	builder = cypher.
 		Match(n).
@@ -42,7 +42,7 @@ func TestAsterisk(t *testing.T) {
 
 func TestProjectInvalid(t *testing.T) {
 	var expect = "map projection create new content: unknown type cypher.FunctionInvocation cannot be used with an implicit name as map entry"
-	n := cypher.AnyNodeNamed("n")
+	n := cypher.AnyNodeNamed("123456789","n")
 	mapProjection := n.Project(cypher.IdByNode(n))
 	if mapProjection.GetError() == nil {
 		t.Error("expect error but got nil")

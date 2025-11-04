@@ -99,7 +99,7 @@ func NodeCreate3(accountId string, additionalLabel ...string) Node {
 }
 
 func NodeCreate4(newProperties MapExpression, node Node) Node {
-	newNode := Node{symbolicName: node.symbolicName, labels: node.labels, notNil: true, properties: PropertiesCreate(newProperties)}
+	newNode := Node{accountId: node.GetAccountId(), symbolicName: node.symbolicName, labels: node.labels, notNil: true, properties: PropertiesCreate(newProperties)}
 	newNode.injectKey()
 	return newNode
 }

@@ -2,7 +2,7 @@ package cypherit
 
 import (
 	"fmt"
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -45,7 +45,7 @@ func TestEqualWithStringLiteral(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`) WHERE u.name = 'Test' RETURN u"
+	expect := "MATCH (u:`dsc_User` {}) WHERE u.name = 'Test' RETURN u"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -62,7 +62,7 @@ func TestEqualWithNumberLiteral(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`) WHERE u.age = 21 RETURN u"
+	expect := "MATCH (u:`dsc_User` {}) WHERE u.age = 21 RETURN u"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}

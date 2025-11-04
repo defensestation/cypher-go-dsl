@@ -1,7 +1,8 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"fmt"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -25,7 +26,12 @@ func TestShouldRenderNodeProperties(t *testing.T) {
 func TestNestedProperties(t *testing.T) {
 	var builder cypher.BuildableStatement
 	//
-	node := cypher.ANode("Test").NamedByString("test").WithRawProperties("outer", cypher.MapOf("a", cypher.LiteralOf("b")))
+	node := cypher.ANode("Test").WithRawProperties("outer", cypher.MapOf("a", cypher.LiteralOf("b")))
+	node2 := cypher.ANode("NewNode").NamedByString("b")
+	nodeWithProperties := node2.WithProperties(cypher.MapOf("a", cypher.LiteralOf("b")))
+	fmt.Printf("accountid is %+v\n", node)
+	fmt.Printf("accountid is %+v\n", node2)
+	fmt.Printf("accountid is %+v\n", nodeWithProperties)
 	builder = cypher.Match(node).
 		Returning(cypher.AnAsterisk())
 	Assert(t, builder, "MATCH (test:`Test` {outer: {a: 'b'}}) RETURN *")
@@ -37,5 +43,6 @@ func TestShouldNotRenderPropertiesInReturn(t *testing.T) {
 	nodeWithProperties := bikeNode.WithRawProperties("a", cypher.LiteralOf("b"))
 	builder = cypher.Match(nodeWithProperties, nodeWithProperties.RelationshipFrom(userNode, "OWNS")).
 		ReturningByNamed(nodeWithProperties)
-	Assert(t, builder, "MATCH (b:`Bike` {a: 'b'}), (b)<-[:`OWNS`]-(u:`User`) RETURN b")
+	Assert(t, builder, "MATCH (b:`dsc_Bike` {} {a: 'b'}), (b)<-[:`OWNS`]-(u:`User`) RETURN b")
+	fmt.Printf("accountid is %+v\n", bikeNode.GetAccountId())
 }

@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -12,7 +12,7 @@ func TestShouldRenderCreateWithoutReturn(t *testing.T) {
 	Assert(t, builder, "CREATE (u:`User`)")
 	//
 	builder = cypher.Create(userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o"))
-	Assert(t, builder, "CREATE (u:`User`)-[o:`OWNS`]->(b:`Bike`)")
+	Assert(t, builder, "CREATE (u:`User`)-[o:`OWNS`]->(b:`dsc_Bike` {})")
 }
 
 func TestShouldRenderMultipleCreatesWithoutReturn(t *testing.T) {
@@ -20,11 +20,11 @@ func TestShouldRenderMultipleCreatesWithoutReturn(t *testing.T) {
 	//
 	builder = cypher.Create(userNode).
 		Create(bikeNode)
-	Assert(t, builder, "CREATE (u:`User`) CREATE (b:`Bike`)")
+	Assert(t, builder, "CREATE (u:`User`) CREATE (b:`dsc_Bike` {})")
 	//
 	builder = cypher.Create(userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o")).
 		Create(OtherNode())
-	Assert(t, builder, "CREATE (u:`User`)-[o:`OWNS`]->(b:`Bike`) CREATE (other:`Other`)")
+	Assert(t, builder, "CREATE (u:`User`)-[o:`OWNS`]->(b:`dsc_Bike` {}) CREATE (other:`Other`)")
 }
 
 func TestShouldRenderCreateReturn(t *testing.T) {
@@ -37,7 +37,7 @@ func TestShouldRenderCreateReturn(t *testing.T) {
 	r := userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o")
 	builder = cypher.Create(r).
 		ReturningByNamed(userNode, r)
-	Assert(t, builder, "CREATE (u:`User`)-[o:`OWNS`]->(b:`Bike`) RETURN u, o")
+	Assert(t, builder, "CREATE (u:`User`)-[o:`OWNS`]->(b:`dsc_Bike` {}) RETURN u, o")
 	//
 	builder = cypher.Create(userNode).
 		ReturningByNamed(userNode).
@@ -53,14 +53,14 @@ func TestShouldRenderMultipleCreatesReturn(t *testing.T) {
 	builder = cypher.Create(userNode).
 		Create(bikeNode).
 		ReturningByNamed(userNode)
-	Assert(t, builder, "CREATE (u:`User`) CREATE (b:`Bike`) RETURN u")
+	Assert(t, builder, "CREATE (u:`User`) CREATE (b:`dsc_Bike` {}) RETURN u")
 	//
 	r := userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o")
 	builder = cypher.
 		Create(r).
 		Create(OtherNode()).
 		ReturningByNamed(userNode, r)
-	Assert(t, builder, "CREATE (u:`User`)-[o:`OWNS`]->(b:`Bike`) CREATE (other:`Other`) RETURN u, o")
+	Assert(t, builder, "CREATE (u:`User`)-[o:`OWNS`]->(b:`dsc_Bike` {}) CREATE (other:`Other`) RETURN u, o")
 }
 
 func TestShouldRenderCreateWithWith(t *testing.T) {
@@ -83,7 +83,7 @@ func TestMatchShouldExposeCreate(t *testing.T) {
 	//
 	builder = cypher.Match(userNode).
 		Create(userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o"))
-	Assert(t, builder, "MATCH (u:`User`) CREATE (u)-[o:`OWNS`]->(b:`Bike`)")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) CREATE (u)-[o:`OWNS`]->(b:`dsc_Bike` {})")
 }
 
 func TestWithShouldExposeCreate(t *testing.T) {
@@ -92,5 +92,5 @@ func TestWithShouldExposeCreate(t *testing.T) {
 	builder = cypher.Match(userNode).
 		WithDistinctByNamed(userNode).
 		Create(userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o"))
-	Assert(t, builder, "MATCH (u:`User`) WITH DISTINCT u CREATE (u)-[o:`OWNS`]->(b:`Bike`)")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) WITH DISTINCT u CREATE (u)-[o:`OWNS`]->(b:`dsc_Bike` {})")
 }

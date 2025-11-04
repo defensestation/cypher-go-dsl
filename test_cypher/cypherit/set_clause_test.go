@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -44,16 +44,16 @@ func TestShouldRenderSet(t *testing.T) {
 	//
 	builder = cypher.Match(userNode).
 		Set(userNode.Property("p").To(cypher.LiteralOf("Hallo, Welt")))
-	Assert(t, builder, "MATCH (u:`User`) SET u.p = 'Hallo, Welt'")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) SET u.p = 'Hallo, Welt'")
 	//
 	builder = cypher.Match(userNode).
 		Set(userNode.Property("p").To(cypher.LiteralOf("Hallo, Welt"))).
 		Set(userNode.Property("a").To(cypher.LiteralOf("Selber hallo.")))
-	Assert(t, builder, "MATCH (u:`User`) SET u.p = 'Hallo, Welt' SET u.a = 'Selber hallo.'")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) SET u.p = 'Hallo, Welt' SET u.a = 'Selber hallo.'")
 	//
 	builder = cypher.Match(userNode).
 		Set(userNode.Property("p").To(cypher.LiteralOf("Hallo")), userNode.Property("g").To(cypher.LiteralOf("Welt")))
-	Assert(t, builder, "MATCH (u:`User`) SET u.p = 'Hallo', u.g = 'Welt'")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) SET u.p = 'Hallo', u.g = 'Welt'")
 }
 
 func TestShouldRenderSetOnNodes(t *testing.T) {
@@ -62,14 +62,14 @@ func TestShouldRenderSetOnNodes(t *testing.T) {
 	builder = cypher.Match(userNode).
 		SetByNode(userNode, "A", "B").
 		ReturningByNamed(userNode)
-	Assert(t, builder, "MATCH (u:`User`) SET u:`A`:`B` RETURN u")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) SET u:`A`:`B` RETURN u")
 	//
 	builder = cypher.Match(userNode).
 		WithByNamed(userNode).
 		SetByNode(userNode, "A", "B").
 		SetByNode(userNode, "C", "D").
 		ReturningByNamed(userNode)
-	Assert(t, builder, "MATCH (u:`User`) WITH u SET u:`A`:`B` SET u:`C`:`D` RETURN u")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) WITH u SET u:`A`:`B` SET u:`C`:`D` RETURN u")
 }
 
 func TestShouldRenderSetFromAListOfExpression(t *testing.T) {
@@ -77,16 +77,16 @@ func TestShouldRenderSetFromAListOfExpression(t *testing.T) {
 
 	builder = cypher.Match(userNode).
 		Set(userNode.Property("p"), cypher.LiteralOf("Hallo, Welt"))
-	Assert(t, builder, "MATCH (u:`User`) SET u.p = 'Hallo, Welt'")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) SET u.p = 'Hallo, Welt'")
 	//
 	builder = cypher.Match(userNode).
 		Set(userNode.Property("p"), cypher.LiteralOf("Hallo"), userNode.Property("g"), cypher.LiteralOf("Welt"))
-	Assert(t, builder, "MATCH (u:`User`) SET u.p = 'Hallo', u.g = 'Welt'")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) SET u.p = 'Hallo', u.g = 'Welt'")
 	//
 	builder = cypher.Match(userNode).
 		Set(userNode.Property("p"), cypher.LiteralOf("Hallo, Welt")).
 		Set(userNode.Property("p"), cypher.LiteralOf("Hallo"), userNode.Property("g"), cypher.LiteralOf("Welt"))
-	Assert(t, builder, "MATCH (u:`User`) SET u.p = 'Hallo, Welt' SET u.p = 'Hallo', u.g = 'Welt'")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) SET u.p = 'Hallo, Welt' SET u.p = 'Hallo', u.g = 'Welt'")
 	//
 	builder = cypher.Match(userNode).
 		Set(userNode.Property("p"))
@@ -109,5 +109,5 @@ func TestShouldRenderMixedSet(t *testing.T) {
 		Set(userNode.Property("p5"), cypher.LiteralOf("Pair one of 2 expressions"),
 			userNode.Property("p6"), cypher.LiteralOf("Pair two of 4 expressions")).
 		Returning(cypher.AnAsterisk())
-	Assert(t, builder, "MATCH (u:`User`) SET u.p1 = 'Two expressions' SET u.p2 = 'A set expression' SET u.p3 = 'One of two set expression', u.p4 = 'Two of two set expression' SET u.p5 = 'Pair one of 2 expressions', u.p6 = 'Pair two of 4 expressions' RETURN *")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) SET u.p1 = 'Two expressions' SET u.p2 = 'A set expression' SET u.p3 = 'One of two set expression', u.p4 = 'Two of two set expression' SET u.p5 = 'Pair one of 2 expressions', u.p6 = 'Pair two of 4 expressions' RETURN *")
 }

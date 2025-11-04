@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -12,7 +12,7 @@ func TestShouldRenderMergeWithoutReturn(t *testing.T) {
 	Assert(t, builder, "MERGE (u:`User`)")
 	//
 	builder = cypher.Merge(userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o"))
-	Assert(t, builder, "MERGE (u:`User`)-[o:`OWNS`]->(b:`Bike`)")
+	Assert(t, builder, "MERGE (u:`User`)-[o:`OWNS`]->(b:`dsc_Bike` {})")
 }
 
 func TestShouldRenderMultipleMergeWithoutReturn(t *testing.T) {
@@ -20,12 +20,12 @@ func TestShouldRenderMultipleMergeWithoutReturn(t *testing.T) {
 	//
 	builder = cypher.Merge(userNode).
 		Merge(bikeNode)
-	Assert(t, builder, "MERGE (u:`User`) MERGE (b:`Bike`)")
+	Assert(t, builder, "MERGE (u:`User`) MERGE (b:`dsc_Bike` {})")
 	//
 	builder = cypher.
 		Merge(userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o")).
 		Merge(OtherNode())
-	Assert(t, builder, "MERGE (u:`User`)-[o:`OWNS`]->(b:`Bike`) MERGE (other:`Other`)")
+	Assert(t, builder, "MERGE (u:`User`)-[o:`OWNS`]->(b:`dsc_Bike` {}) MERGE (other:`Other`)")
 }
 
 func TestShouldRenderMergeReturn(t *testing.T) {
@@ -38,7 +38,7 @@ func TestShouldRenderMergeReturn(t *testing.T) {
 	r := userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o")
 	builder = cypher.Merge(r).
 		ReturningByNamed(userNode, r)
-	Assert(t, builder, "MERGE (u:`User`)-[o:`OWNS`]->(b:`Bike`) RETURN u, o")
+	Assert(t, builder, "MERGE (u:`User`)-[o:`OWNS`]->(b:`dsc_Bike` {}) RETURN u, o")
 	//
 	builder = cypher.Merge(userNode).
 		ReturningByNamed(userNode).
@@ -54,14 +54,14 @@ func TestShouldRenderMultipleMergesReturn(t *testing.T) {
 	builder = cypher.Merge(userNode).
 		Merge(bikeNode).
 		ReturningByNamed(userNode)
-	Assert(t, builder, "MERGE (u:`User`) MERGE (b:`Bike`) RETURN u")
+	Assert(t, builder, "MERGE (u:`User`) MERGE (b:`dsc_Bike` {}) RETURN u")
 	//
 	r := userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o")
 	builder = cypher.
 		Merge(r).
 		Merge(OtherNode()).
 		ReturningByNamed(userNode, r)
-	Assert(t, builder, "MERGE (u:`User`)-[o:`OWNS`]->(b:`Bike`) MERGE (other:`Other`) RETURN u, o")
+	Assert(t, builder, "MERGE (u:`User`)-[o:`OWNS`]->(b:`dsc_Bike` {}) MERGE (other:`Other`) RETURN u, o")
 }
 
 func TestShouldRenderMergeWithWith(t *testing.T) {
@@ -84,7 +84,7 @@ func TestMatchShouldExposeMerge(t *testing.T) {
 	//
 	builder = cypher.Match(userNode).
 		Merge(userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o"))
-	Assert(t, builder, "MATCH (u:`User`) MERGE (u)-[o:`OWNS`]->(b:`Bike`)")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) MERGE (u)-[o:`OWNS`]->(b:`dsc_Bike` {})")
 }
 
 func TestWithShouldExposeMerge(t *testing.T) {
@@ -93,7 +93,7 @@ func TestWithShouldExposeMerge(t *testing.T) {
 	builder = cypher.Match(userNode).
 		WithDistinctByNamed(userNode).
 		Merge(userNode.RelationshipTo(bikeNode, "OWNS").NamedByString("o"))
-	Assert(t, builder, "MATCH (u:`User`) WITH DISTINCT u MERGE (u)-[o:`OWNS`]->(b:`Bike`)")
+	Assert(t, builder, "MATCH (u:`dsc_User` {}) WITH DISTINCT u MERGE (u)-[o:`OWNS`]->(b:`dsc_Bike` {})")
 }
 
 func TestMixedCreateAndMerge(t *testing.T) {
@@ -105,7 +105,7 @@ func TestMixedCreateAndMerge(t *testing.T) {
 		WithDistinctByNamed(bikeNode).
 		Merge(tripNode.RelationshipFrom(bikeNode, "USED_ON")).
 		Returning(cypher.AnAsterisk())
-	Assert(t, builder, "CREATE (u:`User`) MERGE (u)-[o:`OWNS`]->(b:`Bike`) WITH DISTINCT b MERGE (t:`Trip`)<-[:`USED_ON`]-(b) RETURN *")
+	Assert(t, builder, "CREATE (u:`User`) MERGE (u)-[o:`OWNS`]->(b:`dsc_Bike` {}) WITH DISTINCT b MERGE (t:`Trip`)<-[:`USED_ON`]-(b) RETURN *")
 }
 
 func TestSingleCreateAction(t *testing.T) {
@@ -141,7 +141,7 @@ func TestStuffThanSingleMatchAction(t *testing.T) {
 		Set(bikeNode.Property("nice").To(cypher.LiteralTrue())).
 		Merge(userNode).OnMatch().Set(userNode.Property("happy").To(cypher.LiteralTrue())).
 		Create(userNode.RelationshipTo(bikeNode, "OWNS"))
-	Assert(t, builder, "CREATE (b:`Bike`) SET b.nice = true MERGE (u:`User`) ON MATCH SET u.happy = true CREATE (u)-[:`OWNS`]->(b)")
+	Assert(t, builder, "CREATE (b:`dsc_Bike` {}) SET b.nice = true MERGE (u:`User`) ON MATCH SET u.happy = true CREATE (u)-[:`OWNS`]->(b)")
 }
 
 func TestSingleActionMultipleProperties(t *testing.T) {

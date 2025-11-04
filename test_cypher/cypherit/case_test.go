@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -132,7 +132,7 @@ func TestGenericCaseWithMultipleWhenThenAndElse(t *testing.T) {
 // from https://neo4j.com/docs/cypher-manual/current/syntax/expressions/#syntax-simple-case
 func TestCanGetAliasedInReturn(t *testing.T) {
 	var builder cypher.BuildableStatement
-	node := cypher.AnyNodeNamed("n")
+	node := cypher.AnyNodeNamed("123456789","n")
 	//
 	builder = cypher.
 		Match(node).

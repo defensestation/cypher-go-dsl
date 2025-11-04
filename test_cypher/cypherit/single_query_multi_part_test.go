@@ -1,7 +1,7 @@
 package cypherit
 
 import (
-	"github.com/manhcuongbk56/cypher-go-dsl"
+	"github.com/defensestation/cypher-go-dsl"
 	"testing"
 )
 
@@ -20,7 +20,7 @@ func TestSimpleWith(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`)-[:`OWNS`]->(b:`Bike`) WHERE u.a IS NULL WITH b, u RETURN b"
+	expect := "MATCH (u:`dsc_User` {})-[:`OWNS`]->(b:`dsc_Bike` {}) WHERE u.a IS NULL WITH b, u RETURN b"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -59,7 +59,7 @@ func TestSimpleWithChained(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`)-[:`OWNS`]->(b:`Bike`) WHERE u.a IS NULL WITH b, u MATCH (t:`Trip`) WHERE t.name = 'Festive500' WITH b, u, t RETURN b, u, t"
+	expect := "MATCH (u:`dsc_User` {})-[:`OWNS`]->(b:`dsc_Bike` {}) WHERE u.a IS NULL WITH b, u MATCH (t:`Trip`) WHERE t.name = 'Festive500' WITH b, u, t RETURN b, u, t"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -78,7 +78,7 @@ func TestDeletingSimpleWith(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`)-[:`OWNS`]->(b:`Bike`) WHERE u.a IS NULL DELETE u WITH b, u RETURN b, u"
+	expect := "MATCH (u:`dsc_User` {})-[:`OWNS`]->(b:`dsc_Bike` {}) WHERE u.a IS NULL DELETE u WITH b, u RETURN b, u"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -97,7 +97,7 @@ func TestDeletingSimpleWithReverse(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`)-[:`OWNS`]->(b:`Bike`) WHERE u.a IS NULL WITH b, u DELETE u RETURN b, u"
+	expect := "MATCH (u:`dsc_User` {})-[:`OWNS`]->(b:`dsc_Bike` {}) WHERE u.a IS NULL WITH b, u DELETE u RETURN b, u"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
@@ -119,7 +119,7 @@ func TestMixedClauseWithWith(t *testing.T) {
 		return
 	}
 	query, _ := cypher.NewRenderer().Render(statement)
-	expect := "MATCH (u:`User`)-[:`OWNS`]->(b:`Bike`) MATCH (t:`Trip`) DELETE t WITH b, t MATCH (u) WITH b, u RETURN b, u"
+	expect := "MATCH (u:`dsc_User` {})-[:`OWNS`]->(b:`dsc_Bike` {}) MATCH (t:`Trip`) DELETE t WITH b, t MATCH (u) WITH b, u RETURN b, u"
 	if query != expect {
 		t.Errorf("\n%s is incorrect, expect is \n%s", query, expect)
 	}
