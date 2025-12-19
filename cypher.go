@@ -85,6 +85,17 @@ func AnyNodeNamed(primaryLabel string, name string) Node {
 	return NodeCreate(primaryLabel).NamedByString(name)
 }
 
+func AnyNodeNamedNoLabels(name string) Node {
+	node := Node{
+		// accountId: accountId,
+		// labels: labels,
+		notNil: true,
+		properties: PropertiesCreate(NewMapExpression()),
+	}
+	node.injectKey()
+	return node.NamedByString(name)
+}
+
 /**
  * @return The {@code *} wildcard literal.
  */
